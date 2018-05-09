@@ -1,0 +1,17 @@
+body {
+	background-color: #3D1309;
+	margin: 0px;
+}
+
+a:link, a:visited{
+	color: #5C0F00;
+	text-decoration: none;
+}
+a:hover{
+	color: #040002;
+}
+a:active{
+	color: #040002;
+	font: 12pt/10pt 'ALGERIAN';
+	font-size: 42px;
+}

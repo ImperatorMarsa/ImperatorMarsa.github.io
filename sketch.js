@@ -1,5 +1,11 @@
+var canvis;
+var lin;
+
 function setup() {
-	createCanvas(windowWidth-17,windowHeight-17);
+	canvis=createCanvas(windowWidth,windowHeight);
+	
+	lin=createA('/Snejinka_Koha/index.html', 'Koch snowflake');
+	lin.position(8, 8);
 
 	background(205, 130, 220);
 	noCursor();
@@ -11,6 +17,6 @@ function draw() {
 	ellipse(mouseX, mouseY, 22);
 }
 
-function mouseClicked(){
-	setup();
+function mousePressed(){
+	background(205, 130, 220);
 }
