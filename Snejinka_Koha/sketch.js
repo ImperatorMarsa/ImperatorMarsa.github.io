@@ -1,9 +1,9 @@
 var a=[];
 function setup() {
 
-	createCanvas(windowWidth-16,windowHeight-16); // fullscreen();
+	createCanvas(windowWidth,windowHeight); // fullscreen();
 	
-	var len=width/4;
+	var len=windowWidth/4;
 	var gipoten=len/cos(PI*1/6)/2;
 	var pos=createVector(gipoten*cos(PI*-5/6), gipoten*sin(PI*-5/6));
 	var axis=0;
@@ -19,7 +19,7 @@ function setup() {
 }
 function draw() { 
 	background(0);
-	translate(width/2, height/2);
+	translate(windowWidth/2, windowHeight/2);
 	for(var i=0; i<a.length; i++){
 	
 		a[i].show();
