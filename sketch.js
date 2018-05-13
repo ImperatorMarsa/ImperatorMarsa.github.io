@@ -6,14 +6,15 @@ var colon;
 var x0;
 var y0;
 var schitalka=0;
+var link;
 
 var polosochki=[];
 
 function setup() {
 	canvis=createCanvas(windowWidth,windowHeight);
-background(27, 52, 64);
+	background(27, 52, 64);
 
-	var link='Koch snowflake';
+	link='Koch snowflake';
 	links.push(createA('/Snejinka_Koha/index.html', link));
 	link='Hunt for a Doctor';
 	links.push(createA('/Ohota_na_Doktora/index.html', link));
