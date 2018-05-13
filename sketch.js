@@ -17,11 +17,9 @@ background(27, 52, 64);
 	links.push(createA('/Snejinka_Koha/index.html', link));
 	link='Hunt for a Doctor';
 	links.push(createA('/Ohota_na_Doktora/index.html', link));
-	
-	
+		
 	links[0].position(windowWidth/2-windowWidth*.04*link.split('').length/5-windowWidth*.01, windowWidth*.04+windowWidth*.01*0);
 	links[1].position(windowWidth/2-windowWidth*.04*link.split('').length/4.6-windowWidth*.01, windowWidth*.04+windowWidth*.01*13);
-
 
 	yacheyka=(windowWidth>windowHeight)? windowWidth/42:windowHeight/42 ;
 	strok=floor(windowHeight/yacheyka+1);
