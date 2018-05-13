@@ -1,86 +1,106 @@
-var a=[];
-function setup() {
+var snejinka=[];
 
-	createCanvas(windowWidth,windowHeight); // fullscreen();
+function setup() {
+	createCanvas(windowWidth, windowHeight);
+
+	background(0);
+	stroke(255);
+	strokeWeight(5);
+
+	var pony=1.5;
+	var pussy=-PI/73;
+
+	var len=(windowWidth<windowHeight)? windowWidth/1.23 : windowHeight/1.23;
+	snejinka.push(new Koha(new createVector(0, 0), 0, len/pony, color(255)));
+	snejinka.push(new Koha(new createVector(0, 0), pussy, len, color(255, 255, 0, 100)));
+	snejinka.push(new Koha(new createVector(0, 0), 2*pussy, len*pony, color(255, 0, 0, 50)));
 	
-	var len=windowWidth/4;
-	var gipoten=len/cos(PI*1/6)/2;
-	var pos=createVector(gipoten*cos(PI*-5/6), gipoten*sin(PI*-5/6));
-	var axis=0;
-	append(a,new Krivaya(pos, axis, len));
-	
-	pos=createVector(gipoten*cos(PI*-1/6), gipoten*sin(PI*-1/6));
-	axis=2/3;
-	append(a,new Krivaya(pos, axis, len));
-	
-	pos=createVector(gipoten*cos(PI*3/6), gipoten*sin(PI*3/6));
-	axis=-2/3;
-	append(a,new Krivaya(pos, axis, len));
 }
 function draw() { 
 	background(0);
 	translate(windowWidth/2, windowHeight/2);
-	for(var i=0; i<a.length; i++){
-	
-		a[i].show();
-	} 
+	for(let i=0; i<snejinka.length; i++) {
+		snejinka[i].show();
+		snejinka[i].ugol+=.001;
+	}
 }
+
 function mousePressed() {
-
-	push();
-	
-	var b=[];
-	
-	for(var i=0; i<a.length; i++){
-		translate(a[i].pos.x, a[i].pos.y);
-		rotate(PI*a[i].axis);
-		var pos=createVector(a[i].pos.x, a[i].pos.y);
-		var axis=a[i].axis;
-		var len=a[i].len/3.0;
-		append(b, new Krivaya(pos, axis, len));
-		
-		pos=createVector(a[i].pos.x+2*len*cos(PI*axis), a[i].pos.y+2*len*sin(PI*axis));
-		append(b, new Krivaya(pos, axis, len));
-		
-		var boobs=1/6;
-		var alfa=atan(3*tan(boobs*PI));
-		var lens=len/(2*cos(alfa));
-		
-		pos=createVector(a[i].pos.x+len*cos(PI*axis), a[i].pos.y+len*sin(PI*axis));	
-		
-		axis+=-alfa/PI;
-		
-		append(b, new Krivaya(pos, axis, lens));
-		
-		pos=createVector(a[i].pos.x+3*len/(2*cos(PI*boobs))*cos(PI*(a[i].axis-boobs)), a[i].pos.y+3*len/(2*cos(PI*boobs))*sin(PI*(a[i].axis-boobs)));
-		axis+=2*alfa/PI;
-		append(b, new Krivaya(pos, axis, lens));
-		
+	for(let i=0; i<snejinka.length; i++) {
+		snejinka[i].uslojnenie();
 	}
-	arrayCopy(b, a);
-
-	pop();
 }
-//808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080
-function Krivaya(pos, axis, dlina){
-	this.pos=pos;
-	this.axis=axis;
-	this.len=dlina;
-	
-	this.show=function(){
-		push();
-		
-		stroke(255);
 
-		strokeWeight(1);
-		
-		translate(this.pos.x, this.pos.y);
-		rotate(PI*this.axis);
-		
-		line(0,0,this.len,0);
-		pop();
-		
+function Koha(coord, ugol, dlina, cvetik) {
+	this.cvetik=cvetik;
+	this.coord=coord;
+	this.ugol=ugol;
+	this.dlina=dlina;
+	this.krivaya=[];
+
+	var gipoten=this.dlina/cos(PI*1/6)/2;
+	var pos=createVector(gipoten*cos(PI*-5/6), gipoten*sin(PI*-5/6));
+	var axis=0;
+	this.krivaya.push([pos, axis, this.dlina]);
+
+	pos=createVector(gipoten*cos(PI*-1/6), gipoten*sin(PI*-1/6));
+	axis=2/3;
+	this.krivaya.push([pos, axis, this.dlina]);
+
+	pos=createVector(gipoten*cos(PI*3/6), gipoten*sin(PI*3/6));
+	axis=-2/3;
+	this.krivaya.push([pos, axis, this.dlina]);
+
+	this.show=function() {
+		push();
+
+		translate(this.coord.x, this.coord.y);
+		rotate(PI*this.ugol);
+		for(let i=0; i<this.krivaya.length; i++) {
+			push();
+
+			stroke(this.cvetik);
+			strokeWeight(2);
+			translate(this.krivaya[i][0].x, this.krivaya[i][0].y);
+			rotate(PI*this.krivaya[i][1]);
+			line(0, 0, this.krivaya[i][2], 0);
+
+			pop();
 		}
+
+		pop();
 	}
-	
-//808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080
+
+	this.uslojnenie=function() {
+		push();
+
+		var buffer=[];
+		for(var i=0; i<this.krivaya.length; i++){
+			translate(this.krivaya[i][0].x, this.krivaya[i][0].y);
+			rotate(PI*this.krivaya[i][1]);
+			var pos=createVector(this.krivaya[i][0].x, this.krivaya[i][0].y);
+			var axis=this.krivaya[i][1];
+			var len=this.krivaya[i][2]/3.0;
+			buffer.push([pos, axis, len]);
+
+			pos=createVector(this.krivaya[i][0].x+2*len*cos(PI*axis), this.krivaya[i][0].y+2*len*sin(PI*axis));
+			buffer.push([pos, axis, len]);
+
+			var boobs=1/6;
+			var alfa=atan(3*tan(boobs*PI));
+			var lens=len/(2*cos(alfa));
+
+			pos=createVector(this.krivaya[i][0].x+len*cos(PI*axis), this.krivaya[i][0].y+len*sin(PI*axis));
+			axis+=-alfa/PI;
+			buffer.push([pos, axis, lens]);
+
+			pos=createVector(this.krivaya[i][0].x+3*len/(2*cos(PI*boobs))*cos(PI*(this.krivaya[i][1]-boobs)), this.krivaya[i][0].y+3*len/(2*cos(PI*boobs))*sin(PI*(this.krivaya[i][1]-boobs)));
+			axis+=2*alfa/PI;
+			buffer.push([pos, axis, lens]);
+
+		}
+		arrayCopy(buffer, this.krivaya);
+
+		pop();
+	}
+}

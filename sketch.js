@@ -38,9 +38,6 @@ function setup() {
 function draw() {
 	background(27, 52, 64, 70);
 	fill(74, 132, 159, 140);
-	// 180, 214, 198
-	// 245, 241, 213
-	// 242, 132, 92
 	schitalka+=.05;
 
 	for(let i=0; i<colon; i++) {
@@ -58,6 +55,7 @@ function Slesh(x, y, razm, orientaciya) {
 	push();
 	noStroke();
 	translate(x, y);
+	
 	beginShape();
 
 	if(orientaciya) {
@@ -76,7 +74,7 @@ function Slesh(x, y, razm, orientaciya) {
 		vertex(razm, razm/10);
 	}
 
-
 	endShape(CLOSE);
+	
 	pop();
 }
