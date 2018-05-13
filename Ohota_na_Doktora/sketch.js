@@ -15,13 +15,14 @@ var dihalka=0;
 var stars=[];
 
 function preload() {
-	imDalik=loadImage('/css/img/dalik.png');
-	imTardis=loadImage('/css/img/tardis.png');
+	imDalik=loadImage('./css/img/dalik.png');
+	imTardis=loadImage('./css/img/tardis.png');
 }
 
 function setup() {
 	canvis=createCanvas(windowWidth,windowHeight);
 	imageMode(CENTER);
+	noCursor();
 	// background(7, 0, 15, 45);
 
 	if(oldAngel==-1){ 
