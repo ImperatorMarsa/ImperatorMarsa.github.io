@@ -1,56 +1,80 @@
 var canvis;
-var mRad;
-var mas;
-var dR;
-var x;
-var y;
+var links=[];
+var yacheyka;
+var skrok;
+var colon;
+var x0;
+var y0;
+var schitalka=0;
+var link;
+
+var polosochki=[];
 
 function setup() {
-	canvis=createCanvas(windowWidth-16,windowHeight-73);
-	
-	mRad=((width<height)? width : height)-42;
-	mas=[createSlider(.01, .99, .3, .01), createSlider(.01, .99, .4, .01), createSlider(.01, .99, .5, .01)];
-	dR=createSlider(1, 100, 73, 2);
-	x=(-mas[1].value()+mas[2].value())/(2*sum(mas));
-	y=(mas[1].value()-(mas[1].value()+mas[2].value())*sqrt(3)/2)/(sum(mas));
-	
-	colorMode(HSB, 100);
-	strokeWeight(5);
-	ellipseMode(CENTER);
-	background(0);
-	noCursor();
+	canvis=createCanvas(windowWidth,windowHeight);
+	background(27, 52, 64);
+
+	link='Koch snowflake';
+	links.push(createA('/Snejinka_Koha/index.html', link));
+	link='Hunt for a Doctor';
+	links.push(createA('/Ohota_na_Doktora/index.html', link));
+		
+	links[0].position(windowWidth/2-windowWidth*.04*link.split('').length/5-windowWidth*.01, windowWidth*.04+windowWidth*.01*0);
+	links[1].position(windowWidth/2-windowWidth*.04*link.split('').length/4.6-windowWidth*.01, windowWidth*.04+windowWidth*.01*13);
+
+	yacheyka=(windowWidth>windowHeight)? windowWidth/42:windowHeight/42 ;
+	strok=floor(windowHeight/yacheyka+1);
+	colon=floor(windowWidth/yacheyka+1);
+	x0=(colon*yacheyka-windowWidth)/2;
+	y0=(strok*yacheyka-windowHeight)/2;
+
+	for(let j=0; j<strok; j++) {
+		for(let i=0; i<colon; i++) {
+			polosochki.push(random()>.5);
+		}
+	}
 }
 
 function draw() {
-	x=(-mas[1].value()+mas[2].value())/(2*sum(mas));
-	y=(mas[0].value()-(mas[1].value()+mas[2].value())*sqrt(3)/2)/(sum(mas));
+	background(27, 52, 64, 70);
+	fill(74, 132, 159, 140);
+	schitalka+=.05;
 
-	translate(width/2, height/2);
-	for (let i=2*mRad; i>0; i--){
-		noFill();
-		stroke(i/(2*mRad)*73, 100, 100);
-		ellipse(x*dR.value(), y*dR.value(), i);
-		stroke(0);
-		ellipse(0, 0, i+mRad);
+	for(let i=0; i<colon; i++) {
+		for(let j=0; j<strok; j++) {
+			var dlina=sqrt(sq(i*yacheyka-mouseX)+sq(j*yacheyka-mouseY));
+			if (dlina>(1+2*noise(schitalka))*yacheyka){
+				Slesh(i*yacheyka-x0, j*yacheyka-y0, yacheyka, polosochki[j*colon+i]);
+			} else {
+				polosochki[j*colon+i]=random()>.5;
+			}
+		}
 	}
-
-	fill(100);
+}
+function Slesh(x, y, razm, orientaciya) {
+	push();
 	noStroke();
-	ellipse(0, -(mRad+13)/2, 13);
-	ellipse((mRad+13)/2*sin(2*PI/3), -(mRad+13)/2*cos(2*PI/3), 13);
-	ellipse(-(mRad+13)/2*sin(2*PI/3), -(mRad+13)/2*cos(2*PI/3), 13);
-	text(mas[0].value(), 10, -(mRad+7)/2);
-	text(mas[1].value(), (mRad+1)/2*sin(2*PI/3), -(mRad+99)/2*cos(2*PI/3));
-	text(mas[2].value(), -(mRad+42)/2*sin(2*PI/3), -(mRad+99)/2*cos(2*PI/3));
-}
+	translate(x, y);
+	
+	beginShape();
 
-function mousePressed(){
-	background(0);
-}
-function sum(m){
-	var pom=0;
-	for (let i=0; i<m.length; i++) {
-		pom+=m[i].value();
+	if(orientaciya) {
+		vertex(0, 0);
+		vertex(razm/10, 0);
+		vertex(razm, razm*9/10);
+		vertex(razm, razm);
+		vertex(razm*9/10, razm);
+		vertex(0, razm/10);
+	} else {
+		vertex(razm, 0);
+		vertex(razm*9/10, 0);
+		vertex(0, razm*9/10);
+		vertex(0, razm);
+		vertex(razm/10, razm);
+		vertex(razm, razm/10);
 	}
-	return pom;
+
+	endShape(CLOSE);
+	
+	pop();
 }
