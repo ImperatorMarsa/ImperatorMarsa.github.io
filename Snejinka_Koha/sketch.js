@@ -3,7 +3,7 @@ var snejinka=[];
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
-	background(0);
+	// background(0);
 	stroke(255);
 	strokeWeight(5);
 
@@ -17,7 +17,7 @@ function setup() {
 	
 }
 function draw() { 
-	background(0);
+	background(0, 0);
 	translate(windowWidth/2, windowHeight/2);
 	for(let i=0; i<snejinka.length; i++) {
 		snejinka[i].show();
