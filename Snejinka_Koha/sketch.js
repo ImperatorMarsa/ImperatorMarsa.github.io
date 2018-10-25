@@ -18,7 +18,7 @@ function setup() {
 }
 function draw() { 
 	if (I>25){
-		background(255, 73);
+		background(0, 73);
 		I=0;
 	}
 	I++;
