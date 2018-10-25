@@ -17,7 +17,7 @@ function setup() {
 	
 }
 function draw() { 
-	background(0, 73);
+	background(255, 73);
 	translate(windowWidth/2, windowHeight/2);
 	for(let i=0; i<snejinka.length; i++) {
 		snejinka[i].show();
